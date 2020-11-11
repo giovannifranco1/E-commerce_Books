@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<title>login - usuario</title>
+	<h:outputStylesheet library="css" name="style.css" />
+	<style>
+		input[type="submit"]{
+			width: 100%;
+		}
+	
+	</style>
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="content">
+			<div id="login">
+				<h1>login</h1>
+				<h:form >
+
+					<h:messages id="messages" errorStyle="color:red;"
+						infoStyle="color:green;" />
+					<h:panelGrid columns="2">
+						<h:outputLabel value="E-mail:" />
+						<h:inputText id="email" value="#{loginController.pessoa.email}"
+							validatorMessage="Email incorreto!">
+							<f:validateRegex pattern="^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$" />
+							<f:ajax event="blur" execute="email" render="@form" />
+						</h:inputText>
+						<h:outputLabel value="Senha:" />
+						<h:inputSecret value="#{loginController.pessoa.senha}" />
+					</h:panelGrid>
+					<h:commandButton value="entrar"
+						action="#{loginController.validando}" />
+				</h:form>
+				
+				<h:form>
+					<h:commandButton value="Limpar"
+						actionListener="#{loginController.limpar()}">
+					</h:commandButton>
+				</h:form>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>
