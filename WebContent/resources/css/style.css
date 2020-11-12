@@ -3,12 +3,37 @@
 	padding: 0;
 	border: unset;
 }
+body{
+	font-family: Arial;
+}
+li{
+	display: inline;
+}
+a {
+	color: inherit;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:hover {
+	color: white;
+}
 
 .content {
 	width: 500px;
 	min-height: 560px;
 	margin: 0px auto;
 	position: relative;
+}
+.contentTable{
+	width: 1000px;
+	min-height: 560px;
+	margin: 0px auto;
+	position: relative;
+	top: 0px;
+	margin-top: 3%;
 }
 
 h1 {
@@ -62,9 +87,11 @@ input:-moz-placeholder, textarea:-moz-placeholder {
 input {
 	outline: none;
 }
+
 input[type="submit"]:hover {
 	background: #4ab3c6;
 }
+
 /*estilo dos input,  menos o checkbox */
 input:not([type="checkbox"]) {
 	width: 110%;
@@ -79,10 +106,12 @@ input:not([type="checkbox"]) {
 	transition: all 0.2s linear;
 	font-size: 12pt;
 }
-input:focus{
+
+input:focus,select:focus {
 	border: #4ab3c6 solid 2px;
 }
-input[type="submit"]{
+
+input[type="submit"] {
 	width: 25% !important;
 	cursor: pointer;
 	background: rgb(61, 157, 179);
@@ -99,7 +128,21 @@ input[type="submit"]{
 	margin-top: 6%;
 	border-radius: 50px;
 }
-textarea{
+
+select{
+	width: 120%;
+	margin-top: 4px;
+	padding: 10px;
+	border: 1px solid #b2b2b2;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+	box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
+	-webkit-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+	font-size: 12pt;
+}
+textarea {
 	margin-top: 4px;
 	padding: 10px;
 	border: 1px solid #b2b2b2;
@@ -114,12 +157,12 @@ textarea{
 	font-family: Arial;
 }
 
-#login, #cadastro {
+#login, #cadastro, #usuario {
 	position: absolute;
 	top: 0px;
 	width: 88%;
 	padding: 18px 6% 60px 6%;
-	margin: 0 0 35px 0;
+	margin: 5% 0 35px 0;
 	background: #f7f7f7;
 	border: 1px solid rgba(147, 184, 189, 0.8);
 	-webkit-box-shadow: 5px;
@@ -131,22 +174,26 @@ textarea{
 	animation-timing-function: ease;
 	animation-fill-mode: both;
 }
-#login > form > input[type="submit"]{
+
+
+
+#login>form>input[type="submit"] {
 	width: 100%;
 }
-.menu{
+
+.menu {
 	width: auto;
 	height: 50px;
 	background-color: #4ab3c6;
 }
-.menu > ul{
+
+.menu>ul {
 	padding-top: 5px;
 	text-align: center;
 	font-size: 20pt;
-		
 }
-.menu > ul > li {
+
+.menu>ul>li {
 	display: inline;
-	margin: 0 1% 0 1%; 	 	
-	
+	margin: 0 1% 0 1%;
 }

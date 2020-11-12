@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:head>
+	<title>cadastro livro</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="content">
+			<div id="usuario">
+				<h1>Cadastro</h1>
+				<h:form id="usuarioC">
+					<h:messages id="message"
+						style=" 
+					padding: 25px;
+					font-size: 18px;"
+						infoStyle="border-color: #87c940;color: #FFF; background-color: #a0d468; list-style-type:none; padding: 5%;border-radius: 3px;"
+						errorStyle="border-color: #e8273b; color: #FFF; background-color: #ed5565;
+						 list-style-type:none; padding: 5%; border-radius: 3px;" />
+
+					<h:panelGrid>
+						<h:outputLabel value="Nome:" />
+						<h:inputText value="#{loginController.entity.nome}" />
+
+						<h:outputLabel value="Cpf:" />
+						<h:inputText value="#{loginController.entity.cpf}" />
+
+						<h:outputLabel value="Perfio:" />
+						<h:selectOneMenu value="#{loginController.entity.perfil}" >
+							<f:selectItem itemLabel="Selecione ..."/>
+							<f:selectItems value="#{loginController.listaPerfil}"
+													var="i"
+													itemLabel="#{i.label}"/>
+						</h:selectOneMenu>
+						<h:outputLabel value="email:" />
+						<h:inputText value="#{loginController.entity.email}" />
+
+						<h:outputLabel value="Senha:" />
+						<h:inputSecret value="#{loginController.entity.senha}" />
+					</h:panelGrid>
+					
+					<ul>
+						<li> <h:commandButton value="voltar" action="#{loginController.login()}"/></li>
+						<li> <h:commandButton id="cadastrar" value="cadastrar" action="#{loginController.incluir()}">
+						 </h:commandButton></li>
+					</ul>	
+				</h:form>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

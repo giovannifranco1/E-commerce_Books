@@ -8,19 +8,88 @@
 <h:head>
 	<title>login - usuario</title>
 	<h:outputStylesheet library="css" name="style.css" />
+	<style>
+ th, td {
+	border-bottom: 1px solid #ddd;
+	padding: 15px;
+	text-align: left;
+	font-size: 13pt;
+	font-family: Arial;
+}
 
+.contentTable>table {
+	width: 1000px;
+}
+</style>
 </h:head>
-<h:body>
+<h:body style="font-size: 12pt; font-family: Arial;">
+	<h:form>
+		<div class="menu">
+			<ul>
+				<li><h:commandLink value="Login"
+						action="#{loginController.login}" /></li>
+				<li><h:commandLink value="Cadastro"
+						action="#{livroController.cadastro}" /></li>
+				<li><h:commandLink value="Lista"
+						action="#{listaController.lista}" /></li>
+			</ul>
+		</div>
+	</h:form>
 	<div class="container">
-		<div class="content">
-			<h:dataTable value="" var="">
+		<div class="contentTable">
+			<h:form id="busca">
+					<h:outputLabel value="Buscar: "  />
+					<h:inputText style="width: 250px; margin-bottom: 3%;" value="#{listaController.tituloBusca}"
+					pt:placeholder="titulo do filme">
+					<f:ajax
+						listener="#{listaController.atualizar()}"
+						event="keyup"
+						render="table"/>
+					</h:inputText>
+			</h:form>
+			<h:form id="table">
+			<h:dataTable value="#{listaController.listaEntity}" var="i">
+				<h:column>
+					<f:facet name="header"></f:facet>
+					<h:commandLink style="color:red;" value="excluir" actionListener="#{listaController.excluir(i)}"/>	
+				</h:column>
 			
-			
-			
-			
-			
+				<h:column>
+					<f:facet name="header">Id</f:facet>
+					<h:outputLabel value="#{i.id}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Titulo</f:facet>
+					<h:outputLabel value="#{i.titulo}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Editora</f:facet>
+					<h:outputLabel value="#{i.editora}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Categoria</f:facet>
+					<h:outputLabel value="#{i.categoria}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Ano</f:facet>
+					<h:outputLabel value="#{i.ano}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Paginas</f:facet>
+					<h:outputLabel value="#{i.numeroPaginas}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Descricao</f:facet>
+					<h:outputLabel value="#{i.descricao}" />
+				</h:column>
 			</h:dataTable>
-			
+		</h:form>
 		</div>
 	</div>
 

@@ -76,6 +76,9 @@ public abstract class Controller<T> {
 		}	
 		return listaEntity;
 	}
+	public void setListaEntity(List<T> listaEntity) {
+		this.listaEntity = listaEntity;
+	}
 	
 	public void limpar() {
 		entity = null;

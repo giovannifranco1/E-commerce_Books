@@ -9,39 +9,54 @@
 	<title>login - usuario</title>
 	<h:outputStylesheet library="css" name="style.css" />
 	<style>
-		input[type="submit"]{
-			width: 100%;
-		}
+input[type="submit"] {
+	width: 100%;
+}
+#cadastroUsuario{
+	color: #4ab3c6;
+}
+#cadastroUsuario:hover{
+	border-bottom:  #4ab3c6 solid 10px;
 	
-	</style>
+}
+</style>
 </h:head>
 <h:body>
 	<div class="container">
 		<div class="content">
 			<div id="login">
 				<h1>login</h1>
+
 				<h:form >
 
-					<h:messages id="messages" errorStyle="color:red;"
-						infoStyle="color:green;" />
+				<h:messages id="messages" style=" padding: 25px; font-size: 18px;"
+						infoStyle="border-color: #87c940;color: #FFF; background-color: #a0d468; list-style-type:none; padding: 5%;border-radius: 3px;"
+						errorStyle="border-color: #e8273b; color: #FFF; background-color: #ed5565;
+						 list-style-type:none; padding: 5%; border-radius: 3px;"/>
+						 
 					<h:panelGrid columns="2">
 						<h:outputLabel value="E-mail:" />
-						<h:inputText id="email" value="#{loginController.pessoa.email}"
-							validatorMessage="Email incorreto!">
-							<f:validateRegex pattern="^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$" />
-							<f:ajax event="blur" execute="email" render="@form" />
+						<h:inputText value="#{loginController.entity.email}" validatorMessage ="Email incorreto!">
+						<f:validateRegex pattern="^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$" />
+						<f:ajax event="blur" execute="email" render="@form" />
 						</h:inputText>
+						
+						
 						<h:outputLabel value="Senha:" />
-						<h:inputSecret value="#{loginController.pessoa.senha}" />
+						<h:inputSecret value="#{loginController.entity.senha}" />
 					</h:panelGrid>
-					<h:commandButton value="entrar"
-						action="#{loginController.validando}" />
+					<ul>
+						<li><h:commandButton  value="entrar" actionListener="#{loginController.validar()}" >
+						</h:commandButton></li>
+						<li><h:commandButton value="Limpar" actionListener="#{loginController.limpar()}"/></li>
+					</ul>
+					
 				</h:form>
 				
 				<h:form>
-					<h:commandButton value="Limpar"
-						actionListener="#{loginController.limpar()}">
-					</h:commandButton>
+					<h:commandLink id="cadastroUsuario" value="Cadastrar Usuario" style="color:#4ab3c6;" action="#{loginController.cadastroUsuario()}">
+						<f:ajax execute="cadastroUsuario" render="@all"/>
+					</h:commandLink>
 				</h:form>
 			</div>
 		</div>

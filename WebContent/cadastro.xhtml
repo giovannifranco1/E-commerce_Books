@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 <h:head>
 	<title>cadastro livro</title>
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
-	<div class="menu">
-		<ul>
-			<li>Cadastro</li>
-			<li>Login</li>
-			<li>Tabela</li>
-		</ul>
-	</div>
+	<h:form>
+		<div class="menu">
+			<ul>
+				<li><h:commandLink value="Login" action="#{loginController.login}" /></li>
+				<li><h:commandLink value="Cadastro" action="#{livroController.cadastro}"/></li>
+				<li><h:commandLink value="Lista" action="#{listaController.lista}" /></li>
+			</ul>
+		</div>
+	</h:form>
 	<div class="container">
-		<div class="content" style="margin-top: 6%;">
+		<div class="content" >
 			<div id="cadastro">
 				<h1>Cadastre um livro</h1>
 				<h:form>
-					<h:messages id="message" style=" 
+					<h:messages id="message"
+						style=" 
 					padding: 25px;
 					font-size: 18px;"
 						infoStyle="border-color: #87c940;color: #FFF; background-color: #a0d468; list-style-type:none; padding: 5%;border-radius: 3px;"
@@ -43,9 +46,8 @@
 						<h:inputText value="#{livroController.entity.categoria}" />
 
 						<h:outputLabel id="ano" value="Ano:" />
-						<h:inputText value="#{livroController.entity.ano}"/>
-							
-							
+						<h:inputText value="#{livroController.entity.ano}" />
+
 						<h:outputLabel value="Paginas:" />
 						<h:inputText value="#{livroController.entity.numeroPaginas}" />
 
@@ -55,8 +57,8 @@
 
 					<h:commandButton value="cadastrar"
 						actionListener="#{livroController.incluir()}">
-						<f:ajax execute="@form" render="@form"/>
-						
+						<f:ajax execute="@form" render="@form" />
+
 					</h:commandButton>
 					<h:commandButton value="alterar" />
 
