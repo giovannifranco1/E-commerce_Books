@@ -1,6 +1,7 @@
 package br.unitins.livro.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class LivroDAO implements DAO<Livro> {
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("insert into livro "); 
-		sql.append(" (titulo, editora, idioma, categoria, ano, numero_paginas, descricao) ");
+		sql.append(" (titulo, editora, idioma, categoria,numero_paginas, descricao, ano) ");
 		sql.append("values ");
 		sql.append(" (?, ?, ?, ?, ?, ?, ?) ");
 
@@ -32,10 +33,14 @@ public class LivroDAO implements DAO<Livro> {
 			stat.setString(2, obj.getEditora());
 			stat.setString(3, obj.getIdioma());
 			stat.setString(4, obj.getCategoria());
-			stat.setString(5, obj.getAno());
-			stat.setString(6, obj.getNumeroPaginas());
-			stat.setString(7, obj.getDescricao());
-
+			
+			stat.setString(5, obj.getNumeroPaginas());
+			stat.setString(6, obj.getDescricao());
+			
+			if (obj.getAno() != null)
+				stat.setDate(7, Date.valueOf(obj.getAno()));
+			else
+				stat.setDate(7, null);
 			// ternario java
 
 			// convertendo um obj LocalDate para sql.Date
@@ -105,13 +110,15 @@ public class LivroDAO implements DAO<Livro> {
 			stat.setString(2, obj.getEditora());
 			stat.setString(3, obj.getIdioma());
 			stat.setString(4, obj.getCategoria());
-			stat.setString(5, obj.getAno());
+			if (obj.getAno() != null)
+				stat.setDate(5, Date.valueOf(obj.getAno()));
+			else
+				stat.setDate(5, null);
 			stat.setString(6, obj.getNumeroPaginas());
 			stat.setString(7, obj.getDescricao());
 
 
 			stat.execute();
-			// efetivando a transacao
 			conn.commit();
 
 		} catch (SQLException e) {
@@ -227,10 +234,10 @@ public class LivroDAO implements DAO<Livro> {
 				livro.setEditora(rs.getString("editora"));
 				livro.setIdioma(rs.getString("idioma"));
 				livro.setCategoria(rs.getString("categoria"));
-				livro.setAno(rs.getString("ano"));
 				livro.setNumeroPaginas(rs.getString("numero_paginas"));
 				livro.setDescricao(rs.getString("descricao"));
-				
+				Date data = rs.getDate("ano");
+				livro.setAno(data == null ? null : data.toLocalDate());
 				 listaLivro.add(livro);
 			}
 

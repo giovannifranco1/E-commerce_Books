@@ -1,6 +1,7 @@
 package br.unitins.model.ebooks;
 
-import javax.validation.constraints.Size;
+import java.time.LocalDate;
+
 
 public class Livro {
 	private Integer id ;
@@ -9,8 +10,7 @@ public class Livro {
 	private String idioma;
 	private String descricao;
 	private String categoria;
-	@Size (min = 4, max = 4 ,message = "o Ano deve conter 4 digitos") 
-	private String ano;	
+	private LocalDate ano;	
 	private String numeroPaginas;
 	private Autor autor;
 	
@@ -52,10 +52,11 @@ public class Livro {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-	public String getAno() {
+	
+	public LocalDate getAno() {
 		return ano;
 	}
-	public void setAno(String ano) {
+	public void setAno(LocalDate ano) {
 		this.ano = ano;
 	}
 	public String getNumeroPaginas() {

@@ -76,7 +76,9 @@
 
 				<h:column>
 					<f:facet name="header">Ano</f:facet>
-					<h:outputLabel value="#{i.ano}" />
+					<h:outputLabel value="#{i.ano}" >
+						<f:convertDateTime type="localDate" pattern="yyyy" />
+					</h:outputLabel>
 				</h:column>
 
 				<h:column>

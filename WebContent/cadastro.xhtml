@@ -46,7 +46,9 @@
 						<h:inputText value="#{livroController.entity.categoria}" />
 
 						<h:outputLabel id="ano" value="Ano:" />
-						<h:inputText value="#{livroController.entity.ano}" />
+						<h:inputText value="#{livroController.entity.ano}" converterMessage="Erro ao converter a data">
+							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+						</h:inputText>
 
 						<h:outputLabel value="Paginas:" />
 						<h:inputText value="#{livroController.entity.numeroPaginas}" />
