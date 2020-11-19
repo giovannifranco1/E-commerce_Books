@@ -2,24 +2,11 @@
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:jsf="http://xmlns.jcp.org/jsf"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	
+	
 <h:head>
-<title>Lista - Livros</title>
-<h:outputStylesheet library="css" name="style.css" />
-<style>
-th, td {
-	border-bottom: 1px solid #ddd;
-	padding: 15px;
-	text-align: left;
-	font-size: 13pt;
-	font-family: Arial;	
-}
-</style>
-
 <h:outputScript name="jquery-3.5.1.min.js"/>
-<h:outputStylesheet library="css" name="style.css"/>
 
 <style>
 #modal{background-color: rgba(0,0,0, 0.5); width: 100%; height: 100%; position: fixed; top:0; left: 0; display: none;}
@@ -27,18 +14,11 @@ th, td {
 .fechar{padding: 5px 10px; border: solid #ccc 1px; position: absolute; right: 3px; top: 3px;  border-radius: 7px; cursor: pointer; font-family: arial;}
 .fechar:hover{color:#ccc;}
 </style>
+
 </h:head>
 <h:body>
-<div class="menu">
-		<h:form>
-			<ul>
-				<li><h:commandLink value="Login" action="#{loginController.login}" /></li>
-				<li><h:commandLink value="Cadastro" action="#{livroController.cadastro}"/></li>
-				<li><h:commandLink value="Lista" action="#{listaController.lista}" /></li>
-			</ul>
-		</h:form>
-		</div>
-		<script type="text/javascript">
+	<h1>jquery</h1>
+	<script type="text/javascript">
 		$(document).ready(function(e){
 			$('.btn_modal').click(function(){
 				$('#modal').fadeIn(500);
@@ -47,15 +27,18 @@ th, td {
 			$('#modal').fadeOut(500);
 			})
 		});
-		</script>
-		<div id="modal">
-			<div class="modal-box">
-				<div class="fechar">X</div>
-				<div class="conteudo" style="padding-top: 10px;">
-				</div>
+	</script>
+
+	<div id="modal">
+		<div class="modal-box">
+			<div class="fechar">X</div>
+			<div class="conteudo" style="padding-top: 10px;">
+				<h:outputLabel value="nome:"/>
+				<h:inputText/>
 			</div>
 		</div>
-		<div class="container">
+	</div>
+	<div class="container">
 			<div class="contentTable">
 				<h:form id="busca">
 					<h:outputLabel value="Buscar: " />
@@ -70,7 +53,7 @@ th, td {
 					<h:dataTable value="#{listaController.listaEntity}" var="i">
 						<h:column>
 							<f:facet name="header"></f:facet>
-							<h:commandLink class="btn_modal" style="color:red;" value="alterar"/>
+							<h:commandButton value="teste" class="btn_modal"/>
 						</h:column>
 						<h:column>
 							<f:facet name="header"></f:facet>
@@ -118,5 +101,8 @@ th, td {
 				</h:form>
 			</div>
 		</div>
-	</h:body>
+	
+</h:body>
+
+
 </html>

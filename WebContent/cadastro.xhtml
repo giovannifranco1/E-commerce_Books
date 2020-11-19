@@ -3,22 +3,36 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
-
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<title>cadastro livro</title>
-	<h:outputStylesheet library="css" name="style.css" />
+	<ui:insert name="cabesalho">
+	<link rel="shortcut icon" type="image/x-icon" href="#{resource['images/icone.png']}"/>
+		<title>cadastro livro</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</ui:insert>
 </h:head>
 <h:body>
-	<h:form>
-		<div class="menu">
-			<ul>
-				<li><h:commandLink value="Login" action="#{loginController.login}" /></li>
-				<li><h:commandLink value="Cadastro" action="#{livroController.cadastro}"/></li>
-				<li><h:commandLink value="Lista" action="#{listaController.lista}" /></li>
-			</ul>
-		</div>
-	</h:form>
+	<div class="menu">
+	<ui:insert name="menu">
+			<h:form>
+				<ul>
+					<li><h:commandLink value="Login" action="#{loginController.login}" /></li>
+					<li><h:commandLink value="Cadastro" action="#{livroController.cadastro}"/></li>
+					<li><h:commandLink value="Lista" action="#{listaController.lista}" /></li>
+				</ul>
+			</h:form>
+		</ui:insert>
+	</div>
+	<ui:insert name="conteudo">
+	<div>
+				<h:form rendered="#{templateController.usuarioLogado != null}"> 
+					<h:outputLabel value="Olá #{templateController.usuarioLogado.nome}"/>
+					<h:commandLink value=" (Sair)"   
+						action="#{templateController.encerrarSessao}"
+						style="color:white"/>
+				</h:form>
+	</div>
 	<div class="container">
 		<div class="content" >
 			<div id="cadastro">
@@ -75,7 +89,11 @@
 				</h:form>
 			</div>
 		</div>
-
 	</div>
+	
+	<div class="footer" style="text-align: center; background-color:#4ab3c6; padding: 0.3%;">
+			<h:outputText value="2020 - EBooks - Todos os direitos reservados." />
+	</div>
+	</ui:insert>
 </h:body>
 </html>
