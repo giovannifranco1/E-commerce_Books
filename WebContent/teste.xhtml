@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<style>
+#modal{background-color: rgba(0,0,0, 0.5); width: 100%; height: 100%; position: fixed; top:0; left: 0; display: none;}
+.modal-box{background-color: #fff; width: 50%; height: 50%; position: absolute; left:50%; margin-left: -25%; top:50%; margin-top: -12%;}
+.fechar{padding: 5px 10px; border: solid #ccc 1px; position: absolute; right: 3px; top: 3px;  border-radius: 7px; cursor: pointer; font-family: arial;}
+.fechar:hover{color:#ccc;}
+
+</style>
+<h:outputScript name="jquery-3.5.1.min.js"/>
+
+<script type="text/javascript">
+		$(document).ready(function(e){
+			$('.btn_modal').click(function(){
+				$('#modal').fadeIn(500);
+			});
+		$('.fechar').click(function(){
+			$('#modal').fadeOut(500);
+			})
+		});
+</script>
+</h:head>
+<h:body>
+<h:commandLink value="teste" class="btn_modal"/>
+<div id="modal">
+		<div class="modal-box">
+			<div class="fechar">X</div>
+			<div class="conteudo" style="padding-top: 10px;">
+				<h1> ola </h1>
+			</div>
+		</div>
+	</div>
+	<h:form class="btn_modal">
+		<h:commandLink class="btn_modal" style="color:red;" value="alterar">
+			<f:ajax render="modal"/>
+		</h:commandLink>	
+	</h:form>
+	<div class="container">
+			<div class="contentTable">
+				<h:form id="busca">
+					<h:outputLabel value="Buscar: " />
+					<h:inputText style="width: 250px; margin-bottom: 3%;"
+						value="#{listaController.tituloBusca}"
+						pt:placeholder="titulo do livro">
+						<f:ajax listener="#{listaController.atualizar()}" event="keyup"
+							render="table" />
+					</h:inputText>
+				</h:form>
+				<h:form id="table">
+					<h:dataTable value="#{listaController.listaEntity}" var="i">
+						<h:column>
+							<f:facet name="header"></f:facet>
+							<h:commandLink class="btn_modal" style="color:red;" value="alterar">
+								<f:ajax render="modal"/>
+							</h:commandLink>	
+						</h:column>
+						<h:column>
+							<f:facet name="header"></f:facet>
+							<h:commandLink style="color:red;" value="excluir"
+								actionListener="#{listaController.excluir(i)}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Id</f:facet>
+							<h:outputLabel value="#{i.id}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Titulo</f:facet>
+							<h:outputLabel value="#{i.titulo}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Editora</f:facet>
+							<h:outputLabel value="#{i.editora}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Categoria</f:facet>
+							<h:outputLabel value="#{i.categoria}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Ano</f:facet>
+							<h:outputLabel value="#{i.ano}">
+								<f:convertDateTime type="localDate" pattern="yyyy" />
+							</h:outputLabel>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Paginas</f:facet>
+							<h:outputLabel value="#{i.numeroPaginas}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Descricao</f:facet>
+							<h:outputLabel value="#{i.descricao}" />
+						</h:column>
+					</h:dataTable>
+				</h:form>
+			</div>
+		</div>
+</h:body>
+</html>

@@ -16,27 +16,32 @@
 	<div class="menu">
 	<ui:insert name="menu">
 			<h:form>
+			<div class="cliente_menu">
 				<ul>
 					<li><h:commandLink value="Login" action="#{loginController.login}" /></li>
 					<li><h:commandLink value="Cadastro" action="#{livroController.cadastro}"/></li>
 					<li><h:commandLink value="Lista" action="#{listaController.lista}" /></li>
 				</ul>
+			</div>
 			</h:form>
+			<div class="wrapper_header">
+				<div class="session_menu">
+					<h:form rendered="#{templateController.usuarioLogado != null}"> 
+						<h:outputLabel value="Olá #{templateController.usuarioLogado.nome}"/>
+						<h:commandLink value=" (Sair)"   
+							action="#{templateController.encerrarSessao}"
+							style="color:white"/>
+					</h:form>
+				</div>
+			</div>
 		</ui:insert>
 	</div>
 	<ui:insert name="conteudo">
-	<div>
-				<h:form rendered="#{templateController.usuarioLogado != null}"> 
-					<h:outputLabel value="Olá #{templateController.usuarioLogado.nome}"/>
-					<h:commandLink value=" (Sair)"   
-						action="#{templateController.encerrarSessao}"
-						style="color:white"/>
-				</h:form>
-	</div>
+	
 	<div class="container">
 		<div class="content" >
 			<div id="cadastro">
-				<h1>Cadastre um livro</h1>
+				<h1>Cadastre um Livro</h1>
 				<h:form>
 					<h:messages id="message"
 						style=" 
@@ -76,15 +81,9 @@
 						<f:ajax execute="@form" render="@form" />
 
 					</h:commandButton>
-					<h:commandButton value="alterar" />
-
 					<h:commandButton value="limpar"
 						actionListener="#{livroController.limpar()}">
 						<f:ajax render="@form" />
-					</h:commandButton>
-
-					<h:commandButton value="voltar">
-
 					</h:commandButton>
 				</h:form>
 			</div>

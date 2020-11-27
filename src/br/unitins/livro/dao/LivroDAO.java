@@ -271,8 +271,73 @@ public class LivroDAO implements DAO<Livro> {
 
 	@Override
 	public Livro obterUm(Livro obj) throws Exception {
-		
-		return null;
+		Exception exception = null;
+		Connection conn = DAO.getConnection();
+		List<Livro> listaLivro = new ArrayList<Livro>();
+		Livro livro = null;
+
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("  l.id, ");
+		sql.append("  l.titulo, ");
+		sql.append("  l.editora, ");
+		sql.append("  l.idioma, ");
+		sql.append("  l.categoria, ");
+		sql.append("  l.numero_paginas, ");
+		sql.append("  l.descricao, ");
+		sql.append("  l.ano ");
+		sql.append("FROM  ");
+		sql.append("  livro l ");
+		sql.append("WHERE l.id = ? ");
+
+		PreparedStatement stat = null;
+		try {
+
+			stat = conn.prepareStatement(sql.toString());
+			stat.setInt(1, obj.getId());
+
+			ResultSet rs = stat.executeQuery();
+
+			while (rs.next()) {
+				livro = new Livro();
+				livro.setId(rs.getInt("id"));
+				livro.setTitulo(rs.getString("titulo"));
+				livro.setEditora(rs.getString("editora"));
+				livro.setIdioma(rs.getString("idioma"));
+				livro.setCategoria(rs.getString("categoria"));
+				livro.setNumeroPaginas(rs.getString("numero_paginas"));
+				livro.setDescricao(rs.getString("descricao"));
+				Date data = rs.getDate("ano");
+				livro.setAno(data == null ? null : data.toLocalDate());
+				listaLivro.add(livro);
+			}
+
+		} catch (SQLException e) {
+			Util.addErrorMessage("Não foi possivel buscar os dados do usuario.");
+			e.printStackTrace();
+			exception = new Exception("Erro ao executar um sql em UsuarioDAO.");
+		} finally {
+			try {
+				if (!stat.isClosed())
+					stat.close();
+			} catch (SQLException e) {
+				System.out.println("Erro ao fechar o Statement");
+				e.printStackTrace();
+			}
+
+			try {
+				if (!conn.isClosed())
+					conn.close();
+			} catch (SQLException e) {
+				System.out.println("Erro a o fechar a conexao com o banco.");
+				e.printStackTrace();
+			}
+		}
+
+		if (exception != null)
+			throw exception;
+
+		return livro;
 	}
 
 }
