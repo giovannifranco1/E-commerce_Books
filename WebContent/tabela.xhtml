@@ -20,12 +20,13 @@
 		<h:form>
 			<div class="cliente_menu">
 				<ul>
+					<li><h2 style="display:inline;">EBook</h2></li>
 					<li><h:commandLink value="Login"
-							action="#{loginController.login}" /></li>
+							action="login.xhtml?faces-redirect=true" /></li>
 					<li><h:commandLink value="Cadastro"
-							action="#{livroController.cadastro}" /></li>
+							action="cadastro.xhtml?faces-redirect=true" /></li>
 					<li><h:commandLink value="Lista"
-							action="#{listaController.lista}" /></li>
+							action="tabela.xhtml?faces-redirect=true" /></li>
 				</ul>
 			</div>
 			<div class="wrapper_header"></div>
@@ -49,43 +50,47 @@
 					<div class="form-group">
 						<h:outputLabel value="Titulo:" />
 						<h:inputText value="#{modalController.entity.titulo}" />
-		
-					
+
+
 						<h:outputLabel value="Editora:" />
 						<h:inputText value="#{modalController.entity.editora}" />
-				
+
 						<h:outputLabel value="Idioma:" />
 						<h:inputText value="#{modalController.entity.idioma}" />
-	
-					
+
+
 						<h:outputLabel value="Categoria:" />
 						<h:inputText value="#{modalController.entity.categoria}" />
 					</div>
 				</div>
-			<div class="form-row">
-				<div class="form-group">
-					<h:outputLabel id="ano" value="Ano:" />
-					<h:inputText value="#{modalController.entity.ano}"
-						converterMessage="Erro ao converter a data">
-						<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-					</h:inputText>
+				<div class="form-row">
+					<div class="form-group">
+						<h:outputLabel id="ano" value="Ano:" />
+						<h:inputText value="#{modalController.entity.ano}"
+							converterMessage="Erro ao converter a data">
+							<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+						</h:inputText>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Paginas:" />
+						<h:inputText value="#{modalController.entity.numeroPaginas}" />
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Descricão:" />
+						<h:inputText value="#{modalController.entity.descricao}" />
+					</div>
 				</div>
-				<div class="form-group">
-					<h:outputLabel value="Paginas:" />
-					<h:inputText value="#{modalController.entity.numeroPaginas}" />
-				</div>
-				<div class="form-group">
-					<h:outputLabel value="Descricão:" />
-					<h:inputText value="#{modalController.entity.descricao}" />
-				</div>
-			</div>
 			</div>
 			<div class="form-boton">
-					<h:commandButton value="Editar"/>
+				<h:commandButton value="Editar" />
 			</div>
 		</div>
 	</div>
 	<div class="container">
+	<h:messages id="messages"  style="padding: 10px; font-size: 18px;"
+						infoStyle="position:absolute; padding:1.5%; left:50%; border-color: #87c940;color: #FFF; background-color: #a0d468; list-style-type:none; border-radius: 3px;"
+						errorStyle=" border-color: #e8: #fff;
+						 list-style-type:none; padding: 100px; border-radius: 3px;"/>
 		<div class="contentTable">
 			<h:form id="busca">
 				<h:outputLabel value="Buscar: " />
@@ -96,16 +101,17 @@
 						render="table" />
 				</h:inputText>
 			</h:form>
-			<div id="teste">
+			<div id="table_dev">
 				<h:form id="table">
-					<h:dataTable value="#{modalController.listaEntity}" var="i">
+					<h:dataTable value="#{listaController.listaEntity}" var="i">
 						<h:column>
 							<f:facet name="header"></f:facet>
-							<h:commandLink class="btn_modal" value="alterar" action="#{modalController.editar(i)}"
+							<h:commandLink class="btn_modal" value="alterar"
+								action="#{modalController.editar(i)}"
 								style="background-color:#ed5565; 
 									padding: 10%; border: black solid 2px; border-radius: 7px; color: #fff;  ">
-								<f:ajax render="modal" />
-								
+								<f:ajax render="modal messages" />
+
 							</h:commandLink>
 						</h:column>
 						<h:column>
@@ -149,8 +155,8 @@
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">Descricao</f:facet>
-							<h:outputLabel value="#{i.descricao}" />
+							<f:facet name="header">Preço</f:facet>
+							<h:outputLabel value="#{i.preco}" />
 						</h:column>
 					</h:dataTable>
 				</h:form>

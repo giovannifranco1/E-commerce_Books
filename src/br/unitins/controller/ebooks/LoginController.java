@@ -30,7 +30,7 @@ public class LoginController extends Controller<Pessoa> {
 				Util.addErrorMessage("Usuário ou senha inválido.");
 			else {
 				Session.getInstance().setAttribute("usuarioLogado", usuarioLogado);
-				Util.redirect("cadastro.xhtml");
+				Util.redirect("index.xhtml");
 			}	
 
 		} catch (Exception e) {

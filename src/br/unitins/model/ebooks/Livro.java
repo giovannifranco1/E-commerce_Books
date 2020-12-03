@@ -12,6 +12,7 @@ public class Livro {
 	private String categoria;
 	private LocalDate ano;	
 	private String numeroPaginas;
+	private Double preco;
 	private Autor autor;
 	
 	
@@ -70,6 +71,12 @@ public class Livro {
 	}
 	public void setAutor(Autor autor) {
 		this.autor = autor;
+	}
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+	public Double getPreco() {
+		return preco;
 	}
 	@Override
 	public int hashCode() {

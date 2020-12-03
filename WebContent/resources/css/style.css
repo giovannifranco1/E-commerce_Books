@@ -108,7 +108,7 @@ input:not([type="checkbox"]) {
 
 }
 
-input[type="submit"] {
+#cadastro input[type="submit"], #login input[type="submit"]{
 	width: 25% !important;
 	cursor: pointer;
 	background: rgb(61, 157, 179);
@@ -203,7 +203,33 @@ textarea {
 
 .session_menu {
 	position: absolute;
-	top: 50px;
+	top: 60px;
 	right: 10px;
 }
+.session_menu label{
+	color:red;
+}
+.carrinho{
+	position: absolute;
+	top: 80px;
+	right: 200px;
+}
+.consulta {
+	display: flex;
+	margin-bottom: 2%;
+}
+
+.consulta input{
+	width: 100%;
+}
+.consulta select{
+	width: 100%;
+}
+.consulta input[type="submit"] {
+	width: 100% !important;
+	border-radius: 4px;
+	margin: 4px 0 0 23%; 
+}
+
+
 

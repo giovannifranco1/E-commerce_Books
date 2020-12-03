@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+<ui:composition template="/template.xhtml">
+	<ui:define name="head">
+		<title> EBook </title>
+		<h:outputStylesheet library="css" name="tabela.css" />
+		<h:outputStylesheet library="css" name="style.css" />
+	</ui:define>
+	<ui:define name="conteudo">
+		<div class="container">
+			<div class="contentTable">
+				<h:form>
+					<div class="consulta">
+						<div class="form-group">
+							<h:selectOneMenu 
+								value="#{indexController.tipoFiltro}">
+							   <f:selectItem itemValue="1" itemLabel="Nome" />
+							   <f:selectItem itemValue="2" itemLabel="categoria" />                   
+							</h:selectOneMenu>
+						</div>
+						
+						<div class="form-group">
+							<input type="text" class="form-control" 
+					     		placeholder="Informe o filtro ..."
+								jsf:value="#{indexController.filtro}" />
+						</div>
+						
+						<div class="form-group">
+							<h:commandButton value="Buscar"
+								actionListener="#{indexController.buscar}" />
+						</div>	
+					</div>
+				
+				</h:form>
+				<div id="table_dev">
+					<h:form id="table">
+						<h:dataTable value="#{indexController.listaEntity}" var="obj">
+							<h:column>
+								<f:facet name="header">Titulo</f:facet>
+								<h:outputLabel value="#{obj.titulo}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Editora</f:facet>
+								<h:outputLabel value="#{obj.editora}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Categoria</f:facet>
+								<h:outputLabel value="#{obj.categoria}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Ano</f:facet>
+								<h:outputLabel value="#{obj.ano}">
+									<f:convertDateTime type="localDate" pattern="yyyy" />
+								</h:outputLabel>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Paginas</f:facet>
+								<h:outputLabel value="#{obj.numeroPaginas}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Descricao</f:facet>
+								<h:outputLabel value="#{obj.descricao}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Preço</f:facet>
+								<h:outputLabel value="#{obj.preco}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Ação</f:facet>
+								<h:commandLink value="comprar" style="background-color:green; 
+									padding: 10%; border: black solid 2px; border-radius: 7px; color: #fff;	"
+									actionListener="#{indexController.addCarrinho(obj)}">
+			
+								</h:commandLink>
+							</h:column>
+						</h:dataTable>
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>
+</html>

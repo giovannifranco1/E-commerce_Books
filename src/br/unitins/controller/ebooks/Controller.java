@@ -58,7 +58,6 @@ public abstract class Controller<T> {
 	
 	public void editar(T entity) {
 		try {
-			System.out.println("opa");
 			setEntity(dao.obterUm(entity));
 		} catch (Exception e) {
 			Util.addErrorMessage("Problema ao editar.");
