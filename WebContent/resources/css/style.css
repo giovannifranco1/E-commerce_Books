@@ -12,9 +12,6 @@ body {
 	font-family: Arial;
 }
 
-li {
-	display: inline;
-}
 
 a {
 	color: inherit;
@@ -29,11 +26,10 @@ a:hover {
 }
 
 .content {
-	width: 500px;
+	width: 600px;
 	min-height: 560px;
 	margin: 0px auto;
 }
-
 h1 {
 	font-size: 48px;
 	color: #066a75;
@@ -114,7 +110,6 @@ input:not([type="checkbox"]) {
 	background: rgb(61, 157, 179);
 	padding: 8px 5px;
 	color: #fff;
-	font-size: 20px;
 	border: 1px solid #fff;
 	margin-bottom: 10px;
 	text-shadow: 0 1px 1px #333;
@@ -127,7 +122,7 @@ input:not([type="checkbox"]) {
 }
 
 select {
-	width: 120%;
+	width: 111%;
 	margin-top: 4px;
 	padding: 10px;
 	border: 1px solid #b2b2b2;
@@ -180,6 +175,7 @@ textarea {
 	height: 150px;
 }
 
+
 .cliente_menu>ul {
 	padding-top: 5px;
 	font-size: 20pt;
@@ -191,6 +187,7 @@ textarea {
 	font-family: arial;
 	margin: 0 1% 0 1%;
 	color: #fff;
+	display: inline;
 }
 
 .body {
@@ -225,11 +222,106 @@ textarea {
 .consulta select{
 	width: 100%;
 }
-.consulta input[type="submit"] {
-	width: 100% !important;
-	border-radius: 4px;
-	margin: 4px 0 0 23%; 
+
+input[type="text"]:focus, select:focus {
+	border: #4ab3c6 solid 0.5px;
 }
 
+.div_submit li{
+	display: inline;
+}
+.div_submit{
+	margin-top: 10px;
+}
 
+#table_index > table > tbody > tr:hover{
+	background-color: #ccc;
+	cursor: pointer;
+	
+}
 
+#table_index td > a > label{
+	cursor: pointer;
+	font-size: 10pt;
+}
+
+.list_total{
+	margin: 5% 0 5% 10%;
+	
+}
+
+.list_total > li{
+	display: inline;
+	padding: 0 10px
+}
+.list_total label{
+	color: gray;
+	font-size: 12pt;
+	font-family: Arial;
+}
+.list_total input[type="submit"]{
+	width: 150px;
+	position: relative;
+	right: -70%;
+    background: linear-gradient(349.6deg, rgb(242, 82, 0) -26.4%, rgb(255, 118, 48) 99.63%);
+    border: 0.5px solid rgb(255, 169, 125);
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px;
+    border-radius: 5px;
+    color: rgb(245, 245, 245);
+    cursor: pointer;
+}
+#compra_buttom{
+	padding: 5px;
+	background: linear-gradient(349.6deg, rgb(242, 82, 0) -26.4%, rgb(255, 118, 48) 99.63%);
+    border: 0.5px solid rgb(255, 169, 125);
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px;
+    border-radius: 5px;
+    color: rgb(245, 245, 245);
+    cursor: pointer;
+}
+.list_link{
+	top: 60px;
+	left: 165px;
+}
+.list_link > ul > li {
+	color: #fff;
+	display: inline;
+}
+.list_link li {
+	display: inline;
+	font-size: 15pt;
+	padding: 0 10px;
+}
+
+h2:hover{
+	border: 0px;
+	color: #fff;
+}
+	
+.list_history td{
+	padding-left: 40px;
+	border-bottom: solid #ccc 1px;
+	
+}		
+.list_history{
+	border: solid #ccc 3px;
+	border-radius: 7px;
+}
+
+.detalhes_titulo{
+	font-size: 15pt;
+	color: black;
+	font-family: Arial;
+}
+.list_info td{
+	padding: 15px;
+}
+.list_info{
+	background-color: #ccc;
+}
+.description label{
+	padding: 10px 10px;
+	width: 40%;
+}

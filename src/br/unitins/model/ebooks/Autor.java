@@ -6,7 +6,6 @@ public class Autor {
 	private Integer id;
 	private String nome;
 	private LocalDate dataNascimento;
-	private String pais;
 	private String biografia;
 	
 	
@@ -19,6 +18,7 @@ public class Autor {
 	
 	
 	
+
 	
 	
 	public Integer getId() {
@@ -38,12 +38,6 @@ public class Autor {
 	}
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
-	public String getPais() {
-		return pais;
-	}
-	public void setPais(String pais) {
-		this.pais = pais;
 	}
 	public String getBiografia() {
 		return biografia;

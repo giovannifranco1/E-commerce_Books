@@ -5,9 +5,7 @@ import javax.inject.Named;
 
 import br.unitins.application.ebooks.Session;
 import br.unitins.application.ebooks.Util;
-import br.unitins.livro.dao.DAO;
 import br.unitins.livro.dao.PessoaDAO;
-import br.unitins.model.ebooks.Livro;
 import br.unitins.model.ebooks.Perfil;
 import br.unitins.model.ebooks.Pessoa;
 
@@ -22,7 +20,6 @@ public class LoginController extends Controller<Pessoa> {
 	public void logar() {
 		try {
 			Pessoa usuarioLogado =
-
 					dao.obterUsuario(getEntity().getEmail(),
 					Util.hash(charEmail(getEntity().getEmail().toCharArray())
 							+ getEntity().getSenha()));
@@ -51,9 +48,8 @@ public class LoginController extends Controller<Pessoa> {
 		return Perfil.values();
 	}
 
-	public String login() {
+	public void login() {
 		Util.redirect("login.xhtml");
-		return "";
 	}
 
 	public String cadastroUsuario() {

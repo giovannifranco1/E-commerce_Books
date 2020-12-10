@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -16,13 +18,27 @@ import br.unitins.model.ebooks.Livro;
 public class ListaController extends Controller <Livro> implements Serializable  {
 
 	public ListaController() {
-		super(new LivroDAO());
-		
+		super(new LivroDAO());	
 	}
 
 	private static final long serialVersionUID = -1887567031177524999L;
 	
 	private String tituloBusca;
+
+	private Livro livro;
+	
+	public void setLivro(Livro livro) {
+		this.livro = livro;
+	}
+	
+	public Livro getLivro() {
+		return livro;
+	}
+	public void detalhesLivro(Livro livro) {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.put("detalheLivro", livro);
+		Util.redirect("cadastro.xhtml");
+	}
 	
 	public String getTituloBusca() {
 		return tituloBusca;
@@ -32,10 +48,6 @@ public class ListaController extends Controller <Livro> implements Serializable 
 		this.tituloBusca = tituloBusca;
 	}
 	
-	public String lista() {
-		Util.redirect("tabela.xhtml");
-		return "";
-	}
 
 	public void atualizar() {
 		setListaEntity(null);

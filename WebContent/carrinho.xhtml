@@ -6,25 +6,65 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <ui:composition template="/template.xhtml">
-
+	<ui:define name="head">
+		<title>carrinho</title>
+		<h:outputStylesheet library="css" name="style.css"/>
+		<h:outputStylesheet library="css" name="tabela.css"/>
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['images/icone.png']}" />
+		
+	</ui:define>
 	<ui:define name="conteudo">
-		<div class="content">
+		<div class="container" >
+					<h1 style="text-align: center">Carrinho de compras</h1>
 			<div class="contentTable">
-				<div id="table">
-				<h:form>
-					<h:dataTable value="#{carrinhoController.venda.listaItemVenda}" var="obj">
+				<h:messages id="message" style=" text-align: center; padding: 25px; font-size: 18px;"
+						infoStyle="text-align: center; border-color: #87c940;color: #FFF;
+						 background-color: #a0d468; list-style-type:none; padding: 1.5%;border-radius: 3px;"
+						errorStyle="border-color: #e8273b; color: #FFF; background-color: #ed5565;
+						 list-style-type:none; padding: 1.5% 0 ; border-radius: 3px;"/>
+				<div class="table_dev_list">
+						<h:form id="table">
+							<h:dataTable value="#{carrinhoController.venda.listaItemVenda}" style="margin: auto;"
+								var="obj">
+							<h:column>
+								<f:facet name="header">Remover</f:facet>
+								<h:commandLink
+									actionListener="#{carrinhoController.remover(obj)}" >
+									<h:graphicImage width="30px" library="images" name="marca-x.png" alt="remover"/>
+									<f:ajax render="total @form"/>
+								</h:commandLink>
+							</h:column>
+								<h:column>
+									<f:facet name="header">Livro</f:facet>
+									<h:outputLabel value="#{obj.livro.titulo}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">Preço</f:facet>
+									<h:outputLabel value="#{obj.livro.preco}" >
+										<f:convertNumber locale="pt_BR" currencySymbol="R$"
+										type="currency" />
+									</h:outputLabel>
+								</h:column>
 
-						<h:column>
-							<f:facet name="header">Nome</f:facet>
-							<h:outputLabel value="#{obj.livro.nome}" />
-						</h:column>
+							</h:dataTable>
 						
-
-					</h:dataTable>
-				</h:form>
+						</h:form>
+					</div>
+					<h:form id="total">
+							<ul class="list_total">
+								<li> <h:outputLabel style="color: black" value="Total:"/></li>
+								<li> <h:outputLabel  value="#{carrinhoController.total}">
+										<f:convertNumber locale="pt_BR" currencySymbol="R$"
+										type="currency" />
+									</h:outputLabel></li>
+								<li> <h:commandButton value="finalizar Compra" actionListener="#{carrinhoController.finalizar}">
+										<f:ajax execute="@form" render="@form table message"></f:ajax>
+										</h:commandButton></li>
+							</ul>
+					</h:form>
 				</div>
 			</div>
-		</div>
 	</ui:define>
 
 </ui:composition>

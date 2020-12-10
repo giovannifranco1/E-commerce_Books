@@ -9,6 +9,13 @@ public class Venda {
 	private Pessoa usuario;
 	private List<ItemVenda> listaItemVenda;
 	
+	public Double getTotalVenda() {
+		Double totalVenda = 0.0;
+		for (ItemVenda i : listaItemVenda)
+		  totalVenda += i.getPreco();
+
+		return totalVenda;
+	}
 	public Integer getId() {
 		return id;
 	}

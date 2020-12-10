@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+<ui:composition template="/template.xhtml">
+
+<ui:define name="head">
+	<title> Historico </title>
+	<h:outputStylesheet library="css" name="style.css"/>
+	<h:outputStylesheet library="css" name="tabela.css"/>
+	<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['images/icone.png']}" />
+</ui:define>
+	<ui:define name="conteudo">
+		<div class="conteiner">
+			<h1 style="text-align: center">Historico</h1>
+			<div class="contentTable" style="width: 80%">
+				
+				<div class="table_dev_list" style="width: 80%">
+					<h:form>
+						<h:dataTable value="#{historicoController.listaVenda}"  var="obj">
+						<h:column>
+							<f:facet name="header">Numero do pedido</f:facet>
+							<h:outputLabel value="#{obj.id}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Cliente</f:facet>
+							<h:outputLabel value="#{obj.usuario.nome}"/>
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">data</f:facet>
+							<h:outputLabel value="#{obj.data}">
+								<f:convertDateTime type="localDate" pattern="dd-MM-yyyy"/> 
+							</h:outputLabel>
+						</h:column>
+						<h:column>
+							<f:facet name="header"> Total </f:facet>
+							<h:outputLabel value="#{obj.totalVenda}">
+								<f:convertNumber  locale="pt_BR" currencySymbol="R$" type="currency"/>
+							</h:outputLabel>
+						</h:column>
+						<h:column>
+						<f:facet name="header">Ação</f:facet>
+							<h:commandButton value="Detalhes ..." action="#{historicoController.detalhes(obj)}">
+								<f:ajax execute="@this" render="@none"/>
+							</h:commandButton>
+						</h:column>
+						</h:dataTable>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

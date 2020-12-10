@@ -12,43 +12,57 @@
 <h:body style="background-color:black;">
 	<div class="container">
 		<div class="content">
-			<div id="usuario" style="margin-top: 50%; ">
+			<div id="usuario" style="margin-top: 50%;">
 				<h1>Cadastro</h1>
 				<h:form id="usuarioC">
 					<h:messages id="message"
-						style=" 
-					padding: 25px;
-					font-size: 18px;"
-						infoStyle="border-color: #87c940;color: #FFF; background-color: #a0d468; list-style-type:none; padding: 5%;border-radius: 3px;"
+						style=" text-align: center; padding: 25px; font-size: 18px;"
+						infoStyle="border-color: #87c940;color: #FFF; background-color: #a0d468; list-style-type:none; padding: 5%;border-radius: 3px; margin-bottom: 2%;"
 						errorStyle="border-color: #e8273b; color: #FFF; background-color: #ed5565;
-						 list-style-type:none; padding: 5%; border-radius: 3px;" />
+						 list-style-type:none; padding: 5%; border-radius: 3px; margin-bottom: 2%;" />
 
 					<h:panelGrid>
 						<h:outputLabel value="Nome:" />
-						<h:inputText value="#{loginController.entity.nome}" />
+						<h:inputText value="#{cadastroUsuarioController.entity.nome}" />
 
 						<h:outputLabel value="Cpf:" />
-						<h:inputText value="#{loginController.entity.cpf}" />
+						<h:inputText id="itCpf" value="#{cadastroUsuarioController.entity.cpf}"
+							validatorMessage="Cpf inválido. Ex. 999.999.999-99" >
+							111.111.111-11
+							<f:validateRegex 
+								pattern="(^[0-9]{3}\.{1}[0-9]{3}\.{1}[0-9]{3}\-{1}[0-9]{2})|([0-9]{11})"/>
+								<f:ajax event="blur" render="message"/>
+						</h:inputText>
 
-						<h:outputLabel value="Perfio:" />
-						<h:selectOneMenu value="#{loginController.entity.perfil}" >
-							<f:selectItem itemLabel="Selecione ..."/>
-							<f:selectItems value="#{loginController.listaPerfil}"
-													var="i"
-													itemLabel="#{i.label}"/>
-						</h:selectOneMenu>
-						<h:outputLabel value="email:" />
-						<h:inputText value="#{loginController.entity.email}" />
-
+						<h:outputLabel id="email" value="E-mail:" />
+						<h:inputText value="#{cadastroUsuarioController.entity.email}" validatorMessage ="Email incorreto!">
+						<f:validateRegex pattern="^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$" />
+						<f:ajax event="blur" render="message" />
+						</h:inputText>
 						<h:outputLabel value="Senha:" />
-						<h:inputSecret value="#{loginController.entity.senha}" />
+						<h:inputSecret value="#{cadastroUsuarioController.entity.senha}" />
+
+						<h:outputLabel value="Confirmar senha" />
+						<h:inputSecret value="#{cadastroUsuarioController.confirmar}" />
 					</h:panelGrid>
-					
-					<ul>
-						<li> <h:commandButton value="voltar" action="#{loginController.login()}"/></li>
-						<li> <h:commandButton id="cadastrar" value="cadastrar" action="#{loginController.incluir()}">
-						 </h:commandButton></li>
-					</ul>	
+
+					<ul class="div_submit">
+						<li><h:commandButton id="teste" value="voltar"
+								action="login.xhtml?faces-redirect=true">
+								<f:ajax render="@all" />
+							</h:commandButton></li>
+						<li><h:commandButton id="cadastrar" value="cadastrar"
+								disabled="#{cadastroUsuarioController.entity.id != null}"
+								actionListener="#{cadastroUsuarioController.cadastrar()}">
+								<f:ajax execute="@form" render="@form message"/>
+								
+							</h:commandButton></li>
+						<li><h:commandButton value="alterar" style="float: right;"
+								disabled="#{cadastroUsuarioController.entity.id == null}"
+								actionListener="#{cadastroUsuarioController.alterar}">
+								<f:ajax execute="@form" render="@form" />
+							</h:commandButton></li>
+					</ul>
 				</h:form>
 			</div>
 		</div>

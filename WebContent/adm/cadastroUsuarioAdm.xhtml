@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<ui:composition template="/template.xhtml">
+
+<ui:define name="head">
+	<title> cadastro </title>
+	<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['images/icone.png']}" />
+	<h:outputStylesheet library="css" name="style.css"/>
+</ui:define>
+
+	<ui:define name="conteudo">
+		<div class="container">
+			<div class="content">
+				<div id="usuario">
+					<h1>Cadastro Usuario</h1>
+					<h:form id="usuarioC">
+						<h:messages id="message"
+							style=" text-align: center; padding: 25px; font-size: 18px;"
+							infoStyle="border-color: #87c940;color: #FFF; background-color: #a0d468; list-style-type:none; padding: 5%;border-radius: 3px; margin-bottom: 2%;"
+							errorStyle="border-color: #e8273b; color: #FFF; background-color: #ed5565;
+						 list-style-type:none; padding: 5%; border-radius: 3px; margin-bottom: 2%;" />
+
+						<h:panelGrid>
+							<h:outputLabel value="Nome:" />
+							<h:inputText value="#{cadastroControllerAdm.entity.nome}" />
+							<h:outputLabel value="Cpf:"/>
+							<h:inputText id="itCpf" value="#{cadastroControllerAdm.entity.cpf}"
+								validatorMessage="Cpf inválido. Ex. 999.999.999-99" >
+								<f:validateRegex 
+									pattern="(^[0-9]{3}\.{1}[0-9]{3}\.{1}[0-9]{3}\-{1}[0-9]{2})|([0-9]{11})"/>
+									<f:ajax event="blur" render="message"/>
+							</h:inputText>
+
+							<h:outputLabel value="Perfil:" />
+							<h:selectOneMenu
+								value="#{cadastroControllerAdm.entity.perfil}">
+								<f:selectItem itemLabel="Selecione ..." />
+								<f:selectItems value="#{loginController.listaPerfil}" var="i"
+									itemLabel="#{i.label}" />
+							</h:selectOneMenu>
+
+							<h:outputLabel id="email" value="E-mail:" />
+							<h:inputText value="#{cadastroControllerAdm.entity.email}" validatorMessage ="Email incorreto!">
+								<f:validateRegex pattern="^[a-z0-9.]+@[a-z0-9]+\.[a-z]+$" />
+								<f:ajax event="blur" render="message" />
+							</h:inputText>
+							<h:outputLabel value="Senha:" />
+							<h:inputSecret value="#{cadastroControllerAdm.entity.senha}" />
+						
+							<h:outputLabel  value="Confirmar senha" />
+							<h:inputSecret  value="#{cadastroControllerAdm.confirmar}" />
+						</h:panelGrid>
+				
+						<ul class="div_submit">
+							<li><h:commandButton id="cadastrar" value="cadastrar"
+									actionListener="#{cadastroControllerAdm.cadastrar()}">
+									<f:ajax execute="@form" render="@form"/>
+								</h:commandButton></li>
+						</ul>
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>
+</html>

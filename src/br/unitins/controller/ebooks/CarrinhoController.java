@@ -22,7 +22,8 @@ public class CarrinhoController implements Serializable {
 
 	private static final long serialVersionUID = -8209814887157105292L;
 	private Venda venda;
-
+	private Double total;
+	@SuppressWarnings("unchecked")
 	public Venda getVenda() {
 		if (venda == null) {
 			venda = new Venda();
@@ -32,16 +33,20 @@ public class CarrinhoController implements Serializable {
 		Object obj = Session.getInstance().getAttribute("carrinho");
 		if (obj != null)
 			venda.setListaItemVenda((List<ItemVenda>) obj);
-		
+	
 		return venda;
 	}
 	
 	public void remover(ItemVenda itemVenda) {
-		// vcs devem implementar
+		venda.getListaItemVenda().remove(itemVenda);
+	}
+	public void total() {
+		for (ItemVenda venda : venda.getListaItemVenda()) {
+			this.total += venda.getPreco();
+		}
 	}
 	
 	public void finalizar() {
-		// obtendo o usuario da sessao
 		Object obj = Session.getInstance().getAttribute("usuarioLogado");
 		if (obj == null) {
 			Util.addErrorMessage("Para finalizar a venda o usuário deve estar logado.");
@@ -69,6 +74,14 @@ public class CarrinhoController implements Serializable {
 
 	public void setVenda(Venda venda) {
 		this.venda = venda;
+	}
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+	public Double getTotal() {
+		total = 0.0;
+		total();
+		return total;
 	}
 
 }

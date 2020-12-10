@@ -10,6 +10,8 @@
 <h:head>
 	<title>login - usuario</title>
 	<h:outputStylesheet library="css" name="style.css" />
+	<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['images/icone.png']}" />
 	<style>
 input[type="submit"] {
 	width: 100%;
@@ -31,7 +33,7 @@ input[type="submit"] {
 
 				<h:form >
 
-				<h:messages id="messages" style=" padding: 25px; font-size: 18px;"
+				<h:messages id="messages" style=" text-align: center; padding: 25px; font-size: 18px; "
 						infoStyle="border-color: #87c940;color: #FFF; background-color: #a0d468; list-style-type:none; padding: 5%;border-radius: 3px;"
 						errorStyle="border-color: #e8273b; color: #FFF; background-color: #ed5565;
 						 list-style-type:none; padding: 5%; border-radius: 3px;"/>
@@ -47,17 +49,18 @@ input[type="submit"] {
 						<h:outputLabel value="Senha:" />
 						<h:inputSecret value="#{loginController.entity.senha}" />
 					</h:panelGrid>
-					<ul>
+					
+					<ul class="div_submit">
 						<li><h:commandButton  value="entrar" actionListener="#{loginController.logar()}" >
+							<f:ajax execute="@form" render="@form"/>
 						</h:commandButton></li>
 						<li><h:commandButton value="Limpar" actionListener="#{loginController.limpar()}"/></li>
 					</ul>
-					
 				</h:form>
 				
 				<h:form>
-					<h:commandLink id="cadastroUsuario" value="Cadastrar Usuario" style="color:#4ab3c6;" action="#{loginController.cadastroUsuario()}">
-						<f:ajax execute="cadastroUsuario" render="@all"/>
+					<h:commandLink value="Cadastrar Usuario" style="color:#4ab3c6;" action="#{loginController.cadastroUsuario()}">
+						<f:ajax  render="@all"/>
 					</h:commandLink>
 				</h:form>
 			</div>

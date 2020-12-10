@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+<ui:composition template="/template.xhtml">
+	<ui:define name="head">
+		<title>perfil</title>
+		<h:outputStylesheet library="css" name="tabela.css" />
+		<h:outputStylesheet library="css" name="style.css" />
+
+	</ui:define>
+	<ui:define name="conteudo">
+		<div class="content_info">
+			<h1>Detalhe da venda</h1>
+			<div class="conteiner_perfil">
+				<div class="label_info_history">
+				<div class="list_history" style="width: 50%; margin: auto; margin-bottom: 50px;">
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Cliente:" />
+						<h:outputLabel
+							value="#{detalhesHistoricoController.venda.usuario.nome}" />
+
+
+						<h:outputLabel value="Data da venda:" />
+						<h:outputLabel value="#{detalhesHistoricoController.venda.data}">
+							<f:convertDateTime type="localDate" pattern="dd-MM-yyyy" />
+						</h:outputLabel>
+
+						<h:outputLabel value="Total da venda:" />
+						<h:outputLabel
+							value="#{detalhesHistoricoController.venda.totalVenda}">
+							<f:convertNumber locale="pt_BR" currencySymbol="R$"
+								type="currency" />
+						</h:outputLabel>
+
+					</h:panelGrid>
+				</div>
+				<div class="table_dev_list">
+					<h:form id="table">
+						<h:dataTable
+							value="#{detalhesHistoricoController.venda.listaItemVenda}"
+							var="obj">
+							<h:column>
+								<f:facet name="header">Produto</f:facet>
+								<h:outputLabel value="#{obj.livro.titulo}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Id</f:facet>
+								<h:outputLabel value="#{obj.preco}">
+									<f:convertNumber locale="pt_BR" currencySymbol="R$"
+										type="currency" />
+								</h:outputLabel>
+							</h:column>
+
+						</h:dataTable>
+					</h:form>
+				</div>
+				<h:form>
+					<h:commandButton style="float: right;" value="voltar"
+						action="historicoVenda.xhtml?faces=true">
+					</h:commandButton>>
+				</h:form>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>
+</html>

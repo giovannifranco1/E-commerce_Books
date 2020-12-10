@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+<ui:composition template="/template.xhtml">
+<ui:define name="head">
+	<title> detalhes </title>
+	<h:outputStylesheet library="css" name="style.css"/>
+	<h:outputStylesheet library="css" name="tabela.css"/>
+</ui:define>
+	<ui:define name="conteudo">
+			<div class="content_info">
+				<div class="conteiner_">
+				<div class="label_info" style="margin: 50px 0 50px 50px;">
+					<h:outputLabel class="detalhes_titulo" value="#{detalhesLivroController.livro.titulo}" />
+				</div>
+				<div class="list_info">
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Idioma:" style="color:black;"/>
+						<h:outputLabel value="#{detalhesLivroController.livro.idioma}"/>
+						
+						<h:outputLabel value="Paginas:" style="color:black;"/>
+						<h:outputLabel value="#{detalhesLivroController.livro.numeroPaginas}"/>
+						
+						<h:outputLabel value="Preço:" 	style="color:black;"/>
+						<h:outputLabel value="#{detalhesLivroController.livro.preco}">
+							<f:convertNumber locale="pt_BR" currencySymbol="R$"
+										type="currency" />
+						</h:outputLabel>
+						
+						<h:outputLabel value="Editora:"  style="color:black;"/>
+						<h:outputLabel value="#{detalhesLivroController.livro.editora}"/>
+						
+						<h:outputLabel value="Categoria:" style="color:black;"/>
+						<h:outputLabel value="#{detalhesLivroController.livro.categoria}"/>
+					</h:panelGrid>
+				<div class="description" style="margin-left: 50px; ">
+					<h:outputLabel value="Descricão:" style="color:black;"/>
+					<h:outputLabel value="#{detalhesLivroController.livro.descricao}" style="display: block;"/>
+				</div>
+				</div>
+				<h:form>
+					<h:commandButton value="voltar" action="/faces/index.xhtml?faces-redirect=true"/>
+				</h:form>
+			</div>
+		</div>
+		
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,9 +1,9 @@
 package br.unitins.controller.ebooks;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -21,20 +21,39 @@ public class LivroController extends Controller <Livro> implements Serializable 
 
 	public LivroController() {
 		super(new LivroDAO());
+		if(getEntity() == null) 
+			return ;
+		Flash flash =  FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.keep("detalheLivro");
+		setEntity((Livro)flash.get("detalheLivro"));
 	}
 	
 	@Override
 	public Livro getEntity() {
 		if (entity == null)
 			entity = new Livro();
+		
 		return entity;
 
 	}
 	
-	public String cadastro() {
-		Util.redirect("cadastro.xhtml");
-		return "";
+	public void message() {
+		Integer message = 1;
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.put("message", message);
 	}
-	
-	
+	public void alterarCadastro() {
+		LivroDAO dao = new LivroDAO();
+		try {
+			message();
+			dao.alterar(getEntity());
+			Util.addInfoMessage("Alteração realizada com sucesso.");
+			limpar();
+		} catch (Exception e) {
+			Util.addErrorMessage("Não é possivel fazer uma alteração.");
+			e.printStackTrace();
+		}
+		Util.redirect("tabela.xhtml");
+	}
+
 }

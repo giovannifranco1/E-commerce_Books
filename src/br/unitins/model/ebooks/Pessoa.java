@@ -1,8 +1,14 @@
 package br.unitins.model.ebooks;
+
+import javax.validation.constraints.NotBlank;
+
 public class Pessoa {
 	private Integer id;
+	
 	private String nome;
+	@NotBlank(message = "O email não pode estar vazio")
 	private	String email;
+	@NotBlank(message = "A senha não pode estar vazia")
 	private String senha; 
 	private String cpf;
 	private Perfil perfil;

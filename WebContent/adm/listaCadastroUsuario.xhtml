@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	
+<ui:composition template="/template.xhtml">
+
+<ui:define name="head">
+	<title>Lista de Cadastro</title>
+	<h:outputStylesheet library="css" name="tabela.css"/>
+	<h:outputStylesheet library="css" name="style.css"/>
+	<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['images/icone.png']}" />
+</ui:define>
+	<ui:define name="conteudo">
+		<div class="conteiner">
+			<div class="contentTable" style="width: 85%;">
+				<div class="table_dev_list">
+				<h:form id="busca">
+					<h:outputLabel value="Buscar: " />
+					<h:inputText style="width: 250px; margin-bottom: 3%;"
+						value="#{listaControllerUsuario.tituloBusca}"
+						pt:placeholder="titulo do livro">
+						<f:ajax listener="#{listaControllerUsuario.atualizar}" event="keyup"
+								render="table" />
+					</h:inputText>
+				</h:form>
+					<h:form id="table">
+						<h:dataTable value="#{listaControllerUsuario.listaEntity}" var="obj">
+						
+						<h:column>
+							<f:facet name="header"></f:facet>
+							<h:commandLink class="btn_modal" 
+								actionListener="#{listaControllerUsuario.detalhesUsuario(obj)}">
+								<h:graphicImage width="35px" library="images" name="altera.png" alt="alterar"/>
+								<f:ajax render="modal messages" />
+							</h:commandLink>
+							</h:column>
+								<h:column>
+								<f:facet name="header"></f:facet>
+							<h:commandLink
+								actionListener="#{listaControllerUsuario.excluir(obj)}" >
+								<h:graphicImage width="30px" library="images" name="lixo.png" alt="excluir"/>
+								<f:ajax  render="table messages"/>
+							</h:commandLink>
+							</h:column>
+								<h:column>
+									<f:facet name="header">Id</f:facet>
+									<h:outputLabel value="#{obj.id}" />
+								</h:column>
+							<h:column>
+								<f:facet name="header">Nome</f:facet>
+								<h:outputLabel value="#{obj.nome}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Cpf</f:facet>
+								<h:outputLabel value="#{obj.cpf}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Perfil</f:facet>
+								<h:outputLabel value="#{obj.perfil}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Email</f:facet>
+								<h:outputLabel value="#{obj.email}" />
+							</h:column>
+						 	
+						</h:dataTable>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

@@ -86,17 +86,17 @@ public class LivroDAO implements DAO<Livro> {
 	public void alterar(Livro obj) throws Exception {
 		Exception exception = null;
 		Connection conn = DAO.getConnection();
-
+		
 		StringBuffer sql = new StringBuffer();
-		sql.append("UPDATE usuario SET ");
+		sql.append("UPDATE livro SET ");
 		sql.append("  titulo = ?, ");
 		sql.append("  editora = ?, ");
 		sql.append("  idioma = ?, ");
 		sql.append("  categoria = ?, ");
 		sql.append("  ano = ?, ");
-		sql.append("  paginas = ?, ");
-		sql.append("  descricao = ? ");
-		sql.append(" preco = ?");
+		sql.append("  numero_paginas = ?, ");
+		sql.append("  descricao = ?, ");
+		sql.append("  preco = ?");
 		sql.append("WHERE ");
 		sql.append("  id = ? ");
 
@@ -115,6 +115,7 @@ public class LivroDAO implements DAO<Livro> {
 			stat.setString(6, obj.getNumeroPaginas());
 			stat.setString(7, obj.getDescricao());
 			stat.setDouble(8, obj.getPreco());
+			stat.setInt(9, obj.getId());
 			
 
 			stat.execute();
@@ -285,7 +286,7 @@ public class LivroDAO implements DAO<Livro> {
 		sql.append("  l.categoria, ");
 		sql.append("  l.numero_paginas, ");
 		sql.append("  l.descricao, ");
-		sql.append("  l.ano ");
+		sql.append("  l.ano, ");
 		sql.append("  l.preco ");
 		sql.append("FROM  ");
 		sql.append("  livro l ");
@@ -341,79 +342,78 @@ public class LivroDAO implements DAO<Livro> {
 
 		return livro;
 	}
-	public List<Livro> obterListaMidia(Integer tipo, String filtro) throws Exception {
-		Exception exception = null;
-		Connection conn = DAO.getConnection();
-		List<Livro> listaLivro = new ArrayList<Livro>();
+	
+	public List<Livro> obterListaLivro(Integer tipo, String filtro) throws Exception {
+				Exception exception = null;
+				Connection conn = DAO.getConnection();
+				List<Livro> listaLivro = new ArrayList<Livro>();
 
-		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT ");
-		sql.append("  livro.id, ");
-		sql.append("  livro.titulo, ");
-		sql.append("  livro.editora, ");
-		sql.append("  livro.idioma, ");
-		sql.append("  livro.categoria, ");
-		sql.append("  livro.numero_paginas, ");
-		sql.append("  livro.descricao, ");
-		sql.append("  livro.ano ");
-		sql.append("  livro.preco ");
-		sql.append("FROM  ");
-		sql.append("  livro ");
-		sql.append("WHERE ");
-		sql.append("  upper(livro.titulo) LIKE upper( ? ) ");
-		sql.append("  AND upper(livro.categoria) LIKE upper( ? ) ");
-		sql.append("ORDER BY livro.titulo ");
-		
+				StringBuffer sql = new StringBuffer();
+				sql.append("SELECT ");
+				sql.append("  l.id, ");
+				sql.append("  l.titulo, ");
+				sql.append("  l.editora, ");
+				sql.append("  l.idioma, ");
+				sql.append("  l.categoria, ");
+				sql.append("  l.numero_paginas, ");
+				sql.append("  l.descricao, ");
+				sql.append("  l.ano, ");
+				sql.append("  l.preco ");
+				sql.append("FROM  ");
+				sql.append("  livro l ");
+				sql.append("WHERE ");
+				sql.append("  upper(l.titulo) LIKE upper ( ? ) ");
+				sql.append(" and upper(l.categoria) LIKE upper ( ? ) ");
+				PreparedStatement stat = null;
+				try {
 
-		PreparedStatement stat = null;
-		try {
+					stat = conn.prepareStatement(sql.toString());
+					stat.setString(1, tipo == 1 ? "%"+ filtro +"%" : "%");
+					stat.setString(2, tipo == 2 ? "%"+ filtro +"%" : "%");
+					System.out.println(stat);
+					
+					ResultSet rs = stat.executeQuery();
 
-			stat = conn.prepareStatement(sql.toString());
-			stat.setString(1, tipo == 1 ? "%"+ filtro +"%" : "%");
-			stat.setString(2, tipo == 2 ? "%"+ filtro +"%" : "%");
+					while (rs.next()) {
+						Livro livro = new Livro();
+						livro.setId(rs.getInt("id"));
+						livro.setTitulo(rs.getString("titulo"));
+						livro.setEditora(rs.getString("editora"));
+						livro.setIdioma(rs.getString("idioma"));
+						livro.setCategoria(rs.getString("categoria"));
+						livro.setNumeroPaginas(rs.getString("numero_paginas"));
+						livro.setDescricao(rs.getString("descricao"));
+						Date data = rs.getDate("ano");
+						livro.setAno(data == null ? null : data.toLocalDate());
+						livro.setPreco(rs.getDouble("preco"));
+						listaLivro.add(livro);
+					}
 
-			ResultSet rs = stat.executeQuery();
+				} catch (SQLException e) {
+					Util.addErrorMessage("Não foi possivel buscar os dados do midia.");
+					e.printStackTrace();
+					exception = new Exception("Erro ao executar um sql em MidiaDAO.");
+				} finally {
+					try {
+						if (!stat.isClosed())
+							stat.close();
+					} catch (SQLException e) {
+						System.out.println("Erro ao fechar o Statement");
+						e.printStackTrace();
+					}
 
-			while (rs.next()) {
-				Livro livro = new Livro();
-				livro.setId(rs.getInt("id"));
-				livro.setTitulo(rs.getString("titulo"));
-				livro.setEditora(rs.getString("editora"));
-				livro.setIdioma(rs.getString("idioma"));
-				livro.setCategoria(rs.getString("categoria"));
-				livro.setNumeroPaginas(rs.getString("numero_paginas"));
-				livro.setDescricao(rs.getString("descricao"));
-				Date data = rs.getDate("ano");
-				livro.setAno(data == null ? null : data.toLocalDate());
-				livro.setPreco(rs.getDouble("preco"));
-				listaLivro.add(livro);
+					try {
+						if (!conn.isClosed())
+							conn.close();
+					} catch (SQLException e) {
+						System.out.println("Erro a o fechar a conexao com o banco.");
+						e.printStackTrace();
+					}
+				}
+
+				if (exception != null)
+					throw exception;
+
+				return listaLivro;
 			}
-
-		} catch (SQLException e) {
-			Util.addErrorMessage("Não foi possivel buscar os dados do midia.");
-			e.printStackTrace();
-			exception = new Exception("Erro ao executar um sql em MidiaDAO.");
-		} finally {
-			try {
-				if (!stat.isClosed())
-					stat.close();
-			} catch (SQLException e) {
-				System.out.println("Erro ao fechar o Statement");
-				e.printStackTrace();
-			}
-
-			try {
-				if (!conn.isClosed())
-					conn.close();
-			} catch (SQLException e) {
-				System.out.println("Erro a o fechar a conexao com o banco.");
-				e.printStackTrace();
-			}
-		}
-
-		if (exception != null)
-			throw exception;
-
-		return listaLivro;
-	}
 }

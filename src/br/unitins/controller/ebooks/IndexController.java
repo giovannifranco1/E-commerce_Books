@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -15,22 +17,20 @@ import br.unitins.model.ebooks.Livro;
 
 @Named
 @ViewScoped
-public class IndexController extends Controller <Livro> implements Serializable  {
+public class IndexController  implements Serializable  {
 
 	private static final long serialVersionUID = -35677165536221993L;
 
-	public IndexController() {
-		super(new LivroDAO());
-	}
-	
 	private Integer tipoFiltro;
 	private String filtro;
 	private List<Livro> listaLivro;
 	
 	public void buscar() {
 		LivroDAO dao = new LivroDAO();
+			
+		System.out.println(tipoFiltro + " e " + getTipoFiltro());
 		try {
-			setListaLivro(dao.obterListaMidia(tipoFiltro, filtro));
+			setListaLivro(dao.obterListaLivro(tipoFiltro,filtro));
 		} catch (Exception e) {
 			e.printStackTrace();
 			setListaLivro(null);
@@ -68,22 +68,14 @@ public class IndexController extends Controller <Livro> implements Serializable 
 			}
 		
 	}
-
-
-	@Override
-	public Livro getEntity() {
-		if(entity == null)
-			entity = new Livro();
-		return entity;
+	
+	public void detalhes(Livro livro) {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.put("detalheFlash", livro);
+		Util.redirect("detalhesLivro.xhtml");
+		
 	}
 
-	
-	
-	
-	
-	
-	
-	
 	public Integer getTipoFiltro() {
 		return tipoFiltro;
 	}

@@ -4,92 +4,95 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	
+	
 <ui:composition template="/template.xhtml">
 	<ui:define name="head">
 		<title> EBook </title>
 		<h:outputStylesheet library="css" name="tabela.css" />
 		<h:outputStylesheet library="css" name="style.css" />
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['images/icone.png']}" />
 	</ui:define>
 	<ui:define name="conteudo">
 		<div class="container">
 			<div class="contentTable">
+			<h:messages id="message" style=" text-align: center; padding: 25px; font-size: 18px;"
+						infoStyle="text-align: center; border-color: #87c940;color: #FFF;
+						 background-color: #a0d468; list-style-type:none; padding: 1.5%;border-radius: 3px;"
+						errorStyle="border-color: #e8273b; color: #FFF; background-color: #ed5565;
+						 list-style-type:none; padding: 1.5% 0 ; border-radius: 3px;"/>
 				<h:form>
 					<div class="consulta">
 						<div class="form-group">
 							<h:selectOneMenu 
 								value="#{indexController.tipoFiltro}">
-							   <f:selectItem itemValue="1" itemLabel="Nome" />
-							   <f:selectItem itemValue="2" itemLabel="categoria" />                   
+							   <f:selectItem  itemLabel="Nome"      itemValue="1" />
+							   <f:selectItem  itemLabel="categoria" itemValue="2" />                   
 							</h:selectOneMenu>
 						</div>
 						
 						<div class="form-group">
-							<input type="text" class="form-control" 
-					     		placeholder="Informe o filtro ..."
-								jsf:value="#{indexController.filtro}" />
+							<h:inputText value="#{indexController.filtro}" 
+							pt:placeholder = "informe o filtro ..."/>
 						</div>
 						
 						<div class="form-group">
 							<h:commandButton value="Buscar"
-								actionListener="#{indexController.buscar}" />
+								actionListener="#{indexController.buscar}" >
+								<f:ajax execute="@form" render="table_index"/>
+							</h:commandButton>
 						</div>	
-					</div>
+					</div>	
 				
 				</h:form>
 				<div id="table_dev">
-					<h:form id="table">
-						<h:dataTable value="#{indexController.listaEntity}" var="obj">
+					<h:form id="table_index">
+						<h:dataTable value="#{indexController.listaLivro}" var="obj">	
 							<h:column>
 								<f:facet name="header">Titulo</f:facet>
-								<h:outputLabel value="#{obj.titulo}" />
+								<h:commandLink action="#{indexController.detalhes(obj)}">
+									<h:outputLabel value="#{obj.titulo}" />
+								</h:commandLink>
 							</h:column>
-
-							<h:column>
-								<f:facet name="header">Editora</f:facet>
-								<h:outputLabel value="#{obj.editora}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">Categoria</f:facet>
-								<h:outputLabel value="#{obj.categoria}" />
-							</h:column>
-
+					
 							<h:column>
 								<f:facet name="header">Ano</f:facet>
-								<h:outputLabel value="#{obj.ano}">
-									<f:convertDateTime type="localDate" pattern="yyyy" />
-								</h:outputLabel>
+								<h:commandLink action="#{indexController.detalhes(obj)}">
+									<h:outputLabel value="#{obj.ano}">
+										<f:convertDateTime type="localDate" pattern="yyyy" />
+									</h:outputLabel>
+								</h:commandLink>
 							</h:column>
-
 							<h:column>
-								<f:facet name="header">Paginas</f:facet>
-								<h:outputLabel value="#{obj.numeroPaginas}" />
-							</h:column>
-
-							<h:column>
-								<f:facet name="header">Descricao</f:facet>
-								<h:outputLabel value="#{obj.descricao}" />
+								<f:facet name="header">categoria</f:facet>
+								<h:commandLink  action="#{indexController.detalhes(obj)}">
+									<h:outputLabel value="#{obj.categoria}" />
+								</h:commandLink>
 							</h:column>
 							<h:column>
 								<f:facet name="header">Preço</f:facet>
-								<h:outputLabel value="#{obj.preco}" />
+								<h:commandLink  action="#{indexController.detalhes(obj)}">
+									<h:outputLabel value="#{obj.preco}" >
+										<f:convertNumber locale="pt_BR" currencySymbol="R$"
+										type="currency" />
+									</h:outputLabel>
+								</h:commandLink>
 							</h:column>
 							<h:column>
 								<f:facet name="header">Ação</f:facet>
-								<h:commandLink value="comprar" style="background-color:green; 
-									padding: 10%; border: black solid 2px; border-radius: 7px; color: #fff;	"
+								<h:commandLink  value="comprar" style="padding: 5px;background: linear-gradient(349.6deg, rgb(242, 82, 0) -26.4%, rgb(255, 118, 48) 99.63%); border: 0.5px solid rgb(255, 169, 125);box-sizing: border-box;box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px;border-radius: 5px;color: rgb(245, 245, 245);cursor: pointer;"
 									actionListener="#{indexController.addCarrinho(obj)}">
-			
+									<f:ajax render="@form message"/>
 								</h:commandLink>
 							</h:column>
+					
 						</h:dataTable>
 					</h:form>
 				</div>
 			</div>
 		</div>
-
-
 	</ui:define>
 
 </ui:composition>

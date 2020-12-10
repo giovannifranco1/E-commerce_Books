@@ -5,6 +5,10 @@ import java.util.List;
 
 import br.unitins.application.ebooks.Util;
 import br.unitins.livro.dao.DAO;
+import br.unitins.livro.dao.PessoaDAO;
+import br.unitins.model.ebooks.Pessoa;
+
+
 
 public abstract class Controller<T> {
 	
@@ -20,6 +24,7 @@ public abstract class Controller<T> {
 	}
 
 	public void incluir() {
+		
 		try {
 			dao.inserir(getEntity());
 			Util.addInfoMessage("Inclusão realizada com sucesso.");
@@ -89,5 +94,22 @@ public abstract class Controller<T> {
 
 	public void setEntity(T entity) {
 		this.entity = entity;
+	}
+	
+	public static boolean comfirmarEmaiil(Pessoa Usuario) {
+		List<Pessoa> lista = new ArrayList<Pessoa>();
+		PessoaDAO dao = new PessoaDAO();
+		try {
+			lista = dao.obterTodos();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		for (Pessoa pessoa : lista) {
+			if(Usuario.getEmail().equals(pessoa.getEmail())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

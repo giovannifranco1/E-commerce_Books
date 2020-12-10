@@ -5,9 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.unitins.model.ebooks.ItemVenda;
+import br.unitins.model.ebooks.Livro;
+import br.unitins.model.ebooks.Pessoa;
 import br.unitins.model.ebooks.Venda;
 
 public class VendaDAO implements DAO<Venda> {
@@ -27,6 +30,7 @@ public class VendaDAO implements DAO<Venda> {
 
 		try {
 			// Este statement retorna a chave primaria gerada pelo banco de dados
+			System.out.println(stat);
 			stat = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			stat.setInt(1, obj.getUsuario().getId());
 			stat.execute();
@@ -89,7 +93,7 @@ public class VendaDAO implements DAO<Venda> {
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO ");
 		sql.append("item_venda ");
-		sql.append("  (preco, id_midia, id_venda) ");
+		sql.append("  (preco, id_livro, id_venda) ");
 		sql.append("VALUES ");
 		sql.append("  ( ?, ?, ?) ");
 		
@@ -140,6 +144,127 @@ public class VendaDAO implements DAO<Venda> {
 	public Venda obterUm(Venda obj) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public List<Venda> obterTodos(Pessoa usuario) throws Exception {
+		Exception exception = null;
+		Connection conn = DAO.getConnection();
+		List<Venda> listaVenda = new ArrayList<Venda>();
+
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("  v.id, ");
+		sql.append("  v.data_venda, ");
+		sql.append("  v.id_usuario ");
+		sql.append("FROM  ");
+		sql.append("  venda v ");
+		sql.append("WHERE  ");
+		sql.append(" v.id_usuario = ? ");
+
+		PreparedStatement stat = null;
+		try {
+
+			stat = conn.prepareStatement(sql.toString());
+			stat.setInt(1, usuario.getId());
+
+			ResultSet rs = stat.executeQuery();
+
+			while (rs.next()) {
+				Venda venda = new Venda();
+				venda.setId(rs.getInt("id"));
+				venda.setData(rs.getTimestamp("data_venda").toLocalDateTime());
+				venda.setUsuario(usuario);
+				
+				venda.setListaItemVenda(obterTodosItensVenda(venda));
+				
+
+				listaVenda.add(venda);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			exception = new Exception("Erro ao executar um sql em VendaDAO.");
+		} finally {
+			try {
+				if (!stat.isClosed())
+					stat.close();
+			} catch (SQLException e) {
+				System.out.println("Erro ao fechar o Statement");
+				e.printStackTrace();
+			}
+
+			try {
+				if (!conn.isClosed())
+					conn.close();
+			} catch (SQLException e) {
+				System.out.println("Erro a o fechar a conexao com o banco.");
+				e.printStackTrace();
+			}
+		}
+
+		if (exception != null)
+			throw exception;
+
+		return listaVenda;
+	}
+	
+	private List<ItemVenda> obterTodosItensVenda(Venda venda) throws Exception {
+		Exception exception = null;
+		Connection conn = DAO.getConnection();
+		List<ItemVenda> listaItemVenda = new ArrayList<ItemVenda>();
+
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("  l.id, ");
+		sql.append("  l.preco, ");
+		sql.append("  l.id_livro ");
+		sql.append("FROM  ");
+		sql.append(" item_venda l ");
+		sql.append("WHERE  ");
+		sql.append(" l.id_venda = ? ");
+
+		PreparedStatement stat = null;
+		try {
+
+			stat = conn.prepareStatement(sql.toString());
+			stat.setInt(1, venda.getId());
+
+			ResultSet rs = stat.executeQuery();
+
+			while (rs.next()) {
+				ItemVenda itemVenda = new ItemVenda();
+				itemVenda.setId(rs.getInt("id"));
+				itemVenda.setPreco(rs.getDouble("preco"));
+				LivroDAO dao = new LivroDAO();
+				itemVenda.setLivro(dao.obterUm(new Livro(rs.getInt("id_livro"))));
+
+				listaItemVenda.add(itemVenda);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			exception = new Exception("Erro ao executar um sql em Item de venda");
+		} finally {
+			try {
+				if (!stat.isClosed())
+					stat.close();
+			} catch (SQLException e) {
+				System.out.println("Erro ao fechar o Statement");
+				e.printStackTrace();
+			}
+
+			try {
+				if (!conn.isClosed())
+					conn.close();
+			} catch (SQLException e) {
+				System.out.println("Erro a o fechar a conexao com o banco.");
+				e.printStackTrace();
+			}
+		}
+
+		if (exception != null)
+			throw exception;
+
+		return listaItemVenda;
 	}
 	
 }

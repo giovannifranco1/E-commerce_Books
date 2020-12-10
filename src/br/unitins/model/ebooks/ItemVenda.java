@@ -24,4 +24,10 @@ public class ItemVenda {
 	public void setLivro(Livro livro) {
 		this.livro = livro;
 	}
+	public Venda getVenda() {
+		return venda;
+	}
+	public void setVenda(Venda venda) {
+		this.venda = venda;
+	}
 }

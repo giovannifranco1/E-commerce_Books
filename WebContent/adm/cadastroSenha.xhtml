@@ -1,0 +1,55 @@
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+<ui:composition template="/template.xhtml">
+<ui:define name="head">
+	<title>alterar senha</title>
+	<h:outputStylesheet library="css" name="style.css"/>
+	<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['images/icone.png']}" />
+</ui:define>
+	<ui:define name="conteudo">
+		<div class="container">
+		<div class="content">
+			<div id="usuario">
+				<h1>Nova senha</h1>
+				<h:form id="usuarioC">
+					<h:messages id="message" 
+						style=" text-align: center; padding: 25px; font-size: 18px;"
+						infoStyle="border-color: #87c940;color: #FFF; background-color: #a0d468; list-style-type:none; padding: 5%;border-radius: 3px; margin-bottom: 2%;"
+						errorStyle="border-color: #e8273b; color: #FFF; background-color: #ed5565;
+						 list-style-type:none; padding: 5%; border-radius: 3px; margin-bottom: 2%;" />
+
+					<h:panelGrid>
+						
+						<h:outputLabel value="senha:" />
+						<h:inputSecret value="#{cadastroControllerSenha.entity.senha}" />
+						
+						<h:outputLabel value="Confirmar senha:" />
+						<h:inputSecret value="#{cadastroControllerSenha.comfirmar}" />
+						
+					</h:panelGrid>
+					
+					<ul class="div_submit">
+						<li><h:commandButton value="alterar" 
+								actionListener="#{cadastroControllerSenha.alterarSenha}">
+							<f:ajax execute="usuarioC" render="@form"/>
+							</h:commandButton></li>
+							
+	
+					</ul>	
+				</h:form>
+				<h:form>
+					<h:commandButton value="voltar" 
+							actionListener="#{cadastroControllerSenha.voltar}">
+					</h:commandButton>
+				</h:form>
+			</div>
+		</div>
+	</div>
+	</ui:define>
+
+</ui:composition>
+</html>

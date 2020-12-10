@@ -1,11 +1,27 @@
+#table_dev th{
+	padding: 0 50px;
+}
 #table_dev>form>table>tbody>tr>td {
 	border-bottom: 1px solid #ddd;
-	padding: 15px;
+	padding: 15px 50px;
 	text-align: left;
 	font-size: 13pt;
 	font-family: Arial;
 }
 
+.table_dev_list>form>table>tbody>tr>td {
+	border-bottom: 1px solid #ddd;
+	padding: 15px 30px;
+	text-align: left;
+	font-size: 13pt;
+	font-family: Arial;
+}
+.table_dev_list th{
+	padding: 0 30px;
+}
+.table_dev_list{
+	margin: auto;
+}
 .contentTable {
 	width: 80%;
 	margin: 0 auto;
@@ -96,4 +112,7 @@ input:focus, select:focus {
 .form-boton > input[type="submit"]{
 	width: 25% !important;
 	
+}
+table{
+	margin: auto;
 }

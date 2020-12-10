@@ -2,21 +2,38 @@ package br.unitins.model.ebooks;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 
 public class Livro {
 	private Integer id ;
+	@NotBlank(message = "O Titulo não pode ser nulo")
 	private String titulo;
+	@NotBlank(message = "O editora não pode ser nulo")
 	private String editora;
+	@NotBlank(message = "A idioma não pode ser nulo")
 	private String idioma;
+	@NotBlank(message = "O descricao não pode ser nulo")
 	private String descricao;
+	@NotBlank(message = "A categoria não pode ser nulo")
 	private String categoria;
 	private LocalDate ano;	
+
+	@Size(min = 1, max = 10, message = "O numero de paginas deve conter no maximo 10 digitos")
 	private String numeroPaginas;
+	
 	private Double preco;
 	private Autor autor;
 	
 	
-	
+	public Livro() {
+		
+	}
+	public Livro(Integer id) {
+		super();
+		this.id = id;
+	}
 	public Integer getId() {
 		return id;
 	}

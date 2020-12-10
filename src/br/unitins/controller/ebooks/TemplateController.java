@@ -20,7 +20,7 @@ public class TemplateController implements Serializable {
 
 	public void encerrarSessao() {
 		Session.getInstance().invalidateSession();
-		Util.redirect("login.xhtml");
+		Util.redirect("/EBooks/faces/login.xhtml");
 	}
 
 	public Pessoa getUsuarioLogado() {
@@ -29,6 +29,12 @@ public class TemplateController implements Serializable {
 			return null;
 		return (Pessoa) obj;
 	}
+	
+	public void loginEncerrar() {
+		Session.getInstance().invalidateSession();
+		Util.redirect("login.xhtml");
+	}
+	
 	
 
 }

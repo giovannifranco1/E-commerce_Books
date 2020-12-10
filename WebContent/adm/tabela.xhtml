@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Lista - Livros</title>
+	<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['images/icone.png']}" />
+	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputStylesheet library="css" name="tabela.css" />
+	<style>
+</style>
+</h:head>
+<h:body>
+	<div class="menu">
+		<h:form>
+			<div class="cliente_menu">
+				<ul>
+						<li><h:commandLink action="/faces/index.xhtml?faces-redirect=true">
+							<f:ajax execute="session" render="session"/>
+						<h2 style="display: inline; ">EBook</h2></h:commandLink></li>
+						<li><h:commandLink value="Login " 
+								actionListener="#{templateController.encerrarSessao}" /></li>
+						<li><h:commandLink value="Cadastro"
+								action="/faces/adm/cadastro.xhtml?faces-redirect=true" /></li>
+						<li><h:commandLink value="Historico"
+								action="/faces/historicoVenda.xhtml?faces-redirect=true" /></li>
+						<li><h:commandLink value="Perfil"
+								action="/faces/perfil.xhtml?faces-redirect=true" style="float:right; margin:10px;"/></li>
+					</ul>
+				</div>
+				<div class="wrapper_header">
+					<div class="list_link" style="position: absolute;">
+						<ul>
+							<li><h:commandLink value="Cadastro de usuario" action="/faces/adm/cadastroUsuarioAdm.xhtml?faces-redirect=true"/></li>
+							<li><h:commandLink value="Lista de usuario"    action="/faces/adm/listaCadastroUsuario.xhtml?faces-redirect=true"/></li>
+							<li><h:commandLink value="Lista de livros"     action="/faces/adm/tabela.xhtml?faces-redirect=true" /> </li>
+						</ul>
+					</div>
+				<div class="session_menu">
+						<h:form rendered="#{templateController.usuarioLogado != null}">
+							<h:outputLabel
+								value="Olá #{templateController.usuarioLogado.nome}" />
+							<h:commandLink value=" (Sair)"
+									action="#{templateController.encerrarSessao}" style="color:white" >
+								<f:ajax execute="@form"/>
+							</h:commandLink>
+						</h:form>
+				</div>
+
+				<div class="carrinho">
+						<h:form>
+							<h:commandLink action="/faces/carrinho.xhtml?faces-redirect=true">
+								<img 
+									src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%20%20%3Cg%20id%3D%22ic-carrinho-header%22%20transform%3D%22translate%28-344%20-664%29%22%3E%20%20%20%20%3Cpath%20id%3D%22_%22%20data-name%3D%22%EF%8D%B0%22%20d%3D%22M17.634%2C22a1.877%2C1.877%2C0%2C0%2C1-1.416-.627%2C2.105%2C2.105%2C0%2C0%2C1-.586-1.48%2C2.017%2C2.017%2C0%2C0%2C1%2C.586-1.454%2C1.913%2C1.913%2C0%2C0%2C1%2C1.416-.6%2C2.07%2C2.07%2C0%2C0%2C1%2C2.051%2C2.056%2C2.06%2C2.06%2C0%2C0%2C1-.611%2C1.48A1.951%2C1.951%2C0%2C0%2C1%2C17.634%2C22ZM6.683%2C22a1.954%2C1.954%2C0%2C0%2C1-1.441-.627%2C2.059%2C2.059%2C0%2C0%2C1-.61-1.48%2C2.017%2C2.017%2C0%2C0%2C1%2C.586-1.454%2C2.077%2C2.077%2C0%2C0%2C1%2C1.465-.6%2C1.912%2C1.912%2C0%2C0%2C1%2C1.416.6%2C2.015%2C2.015%2C0%2C0%2C1%2C.586%2C1.454%2C2.1%2C2.1%2C0%2C0%2C1-.586%2C1.48A1.876%2C1.876%2C0%2C0%2C1%2C6.683%2C22Zm12.779-5.946H6.611a2.53%2C2.53%2C0%2C0%2C1-1.719-.577%2C2.054%2C2.054%2C0%2C0%2C1-.661-1.627A1.941%2C1.941%2C0%2C0%2C1%2C4.5%2C12.8l1.64-2.676L2.221%2C2.2H0V0H3.6l1%2C2.2H20.89a1.112%2C1.112%2C0%2C0%2C1%2C.766.315A.971.971%2C0%2C0%2C1%2C22%2C3.253a1.164%2C1.164%2C0%2C0%2C1-.106.525l-3.966%2C6.768a1.987%2C1.987%2C0%2C0%2C1-1.9%2C1.154h-8.2l-1.11%2C1.679-.068.176a.57.57%2C0%2C0%2C0-.038.139.233.233%2C0%2C0%2C0%2C.264.262H19.461v2.1Z%22%20transform%3D%22translate%28345%20665%29%22%20fill%3D%22%23fff%22%2F%3E%20%20%20%20%3Crect%20id%3D%22Ret%C3%A2ngulo_3650%22%20data-name%3D%22Ret%C3%A2ngulo%203650%22%20width%3D%2224%22%20height%3D%2224%22%20transform%3D%22translate%28344%20664%29%22%20fill%3D%22none%22%2F%3E%20%20%3C%2Fg%3E%3C%2Fsvg%3E"
+									width="30px" alt="Carrinho"  />
+								<f:ajax execute="@form"/>
+							</h:commandLink>
+						</h:form>
+					</div>
+			</div>
+		</h:form>
+	</div>
+	<div class="container">
+	<h:messages id="messages"  style="padding: 10px; font-size: 18px;"
+						infoStyle="position:absolute; padding:1.5%; left:50%; border-color: #87c940;color: #FFF; background-color: #a0d468; list-style-type:none; border-radius: 3px;"
+						errorStyle=" border-color: #e8: #fff;
+						 list-style-type:none; padding: 100px; border-radius: 3px;"/>
+		<div class="contentTable">
+			<h:form id="busca">
+				<h:outputLabel value="Buscar: " />
+				<h:inputText style="width: 250px; margin-bottom: 3%;"
+					value="#{listaController.tituloBusca}"
+					pt:placeholder="titulo do livro">
+					<f:ajax listener="#{listaController.atualizar()}" event="keyup"
+						render="table" />
+				</h:inputText>
+			</h:form>
+			<div class="table_dev_list">
+				<h:form id="table">
+					<h:dataTable value="#{listaController.listaEntity}" var="i">
+						<h:column>
+							<f:facet name="header"></f:facet>
+							<h:commandLink class="btn_modal" 
+								actionListener="#{listaController.detalhesLivro(i)}">
+								<h:graphicImage width="35px" library="images" name="altera.png" alt="alterar"/>
+								<f:ajax render="modal messages" />
+							</h:commandLink>
+						</h:column>
+						<h:column>
+							<f:facet name="header"></f:facet>
+							<h:commandLink
+								actionListener="#{listaController.excluir(i)}" >
+								<h:graphicImage width="30px" library="images" name="lixo.png" alt="excluir"/>
+								<f:ajax  render="table messages"/>
+							</h:commandLink>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Id</f:facet>
+							<h:outputLabel value="#{i.id}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Titulo</f:facet>
+							<h:outputLabel value="#{i.titulo}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Editora</f:facet>
+							<h:outputLabel value="#{i.editora}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Categoria</f:facet>
+							<h:outputLabel value="#{i.categoria}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Ano</f:facet>
+							<h:outputLabel value="#{i.ano}">
+								<f:convertDateTime type="localDate" pattern="yyyy" />
+							</h:outputLabel>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Paginas</f:facet>
+							<h:outputLabel value="#{i.numeroPaginas}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Preço</f:facet>
+							<h:outputLabel value="#{i.preco}" >
+								<f:convertNumber  locale="pt_BR" currencySymbol="R$" type="currency"/>
+							</h:outputLabel>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+			</div>
+		</div>
+	</div>
+</h:body>
+
+</html>
